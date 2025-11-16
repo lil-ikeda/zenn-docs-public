@@ -178,3 +178,55 @@ ADRで比較した7つのツールのうち、主要な項目を抜粋して比�
 
 1. **SharedStep APIの有無**: テストデータ準備の手順をテンプレート化し、API経由で管理できることは、ClaudeCodeとの連携を考えると重要な要件でした
 2. **料金体系の柔軟性**: Read Only Userを$4/user/monthで招待できるため、エンジニアなど多くのメンバーに閲覧権限を付与しやすい
+
+## Qaseを選んだ理由
+
+前セクションで比較した通り、Qaseは3つの要件をすべて満たした唯一のツールでした。ここでは、Qaseを選定したことで実現できるワークフローについて説明します。
+
+### 実現したいワークフロー
+
+Qaseを選定したことで、以下のワークフローが実現できます：
+
+```mermaid
+sequenceDiagram
+    actor QA as QAチーム
+    participant CC as ClaudeCode
+    participant GH as GitHub
+    participant Qase as Qase
+    participant Linear as Linear
+    actor Dev as 開発チーム
+
+    QA->>CC: テストケース生成依頼
+    CC->>GH: テストケース生成（CSV/Markdown）
+    GH->>GH: Pull Requestレビュー
+    GH->>Qase: mainマージ時に自動同期（Actions + API）
+    QA->>Qase: テスト実行・結果入力
+    QA->>Qase: 不具合起票操作
+    Qase->>Linear: Issue作成
+    Linear->>Dev: 通知・確認
+```
+
+このワークフローにより、以下が実現できます：
+
+1. **テストケース作成の自動化**: ClaudeCodeが仕様書から自動生成
+2. **エンジニアレビューの組み込み**: GitHubのPull Requestで、コードレビューと同様のプロセスでテストケースをレビュー
+3. **自動同期**: mainブランチへのマージをトリガーに、GitHub ActionsがQase APIを呼び出してテストケースを同期
+4. **シームレスな不具合管理**: Qaseでの不具合発見時、Qaseから直接LinearのIssueを作成し、開発チームに通知
+
+### Linear連携による不具合管理の効率化
+
+もともとエンジニアのタスク管理にLinearを使用していたため、不具合起票もLinearに統一することで、以下の効果が期待できます：
+
+- **一元管理**: 開発タスクも不具合も同じツールで管理
+- **スムーズな連携**: 開発チームが普段使っているツールで不具合を確認・対応できる
+- **トレーサビリティ**: テストケースと不具合、不具合と修正コードの紐付けが明確になる
+
+### API充実度の重要性
+
+SharedStep管理APIがあることで、テストデータ準備の手順を以下のように管理できます：
+
+1. ClaudeCodeがテストデータ準備手順をSharedStepとして生成
+2. GitHub ActionsがQase APIでSharedStepを作成・更新
+3. テストケースからSharedStepを参照
+
+これにより、共通手順の変更が必要になった際も、GitHubで管理しているMarkdownファイルを更新するだけで、Qase側にも自動的に反映されます。
