@@ -1,1 +1,4 @@
-# zenn-docs-public
+# Zenn Docs Public
+
+## Zenn CLI
+* [📘 How to use](https://zenn.dev/zenn/articles/zenn-cli-guide)
