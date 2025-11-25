@@ -1,7 +1,7 @@
 ---
 title: "AI Agent時代のテストマネジメントツール選定 - Qaseを選んだ理由"
 emoji: "🧪"
-type: "idea"
+type: "tech"
 topics: ["qa", "テスト", "qase", "テストマネジメント", "claudecode"]
 published: true
 ---
