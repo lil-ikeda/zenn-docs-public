@@ -8,7 +8,7 @@ topics:
   - "ClaudeCode"
   - "エンジニアリングマネージャー"
   - "ピープルマネジメント"
-published: false
+published: true
 ---
 
 ## はじめに
