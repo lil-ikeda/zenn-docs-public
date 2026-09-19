@@ -3,7 +3,8 @@ title: "テストケースの「十分性」を LLM に判定させる ── QA
 emoji: "⚖️"
 type: "tech"
 topics: ["qa", "テスト", "llm", "ai", "品質保証"]
-published: false
+published: true
+published_at: "2026-09-19 13:54"
 ---
 
 テストケース群が「十分か」を判定する仕組みを作っています。社内では QA Gauge と呼んでいます。テストケースを生成する AI ではなく、提出されたテストケース群に過不足がないかを判定する AI です。
